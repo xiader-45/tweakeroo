@@ -20,7 +20,7 @@ public class MixinSpyglassItem
 	@Inject(method = "use", at = @At("RETURN"))
 	private void tweakeroo_onSpyglassActivate(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir)
 	{
-		if (cir.getReturnValue() == InteractionResult.CONSUME)
+		if (cir.getReturnValue() instanceof InteractionResult.Success)
 		{
 			// Don't check if the Tweak is active; just mark as in use
 			// in case someone decides to toggle it while already using.

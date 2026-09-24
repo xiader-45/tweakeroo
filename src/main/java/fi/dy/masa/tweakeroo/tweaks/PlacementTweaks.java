@@ -278,7 +278,7 @@ public class PlacementTweaks
                     InteractionResult result = tryPlaceBlock(mc.gameMode, player, mc.level,
                                                         posNew, sideFirst, sideRotatedFirst, playerYawFirst, hitVec, hand, hitPartFirst, false, false);
 
-                    if (result == InteractionResult.SUCCESS)
+                    if (result instanceof InteractionResult.Success)
                     {
                         posLast = posNew;
                         mc.hitResult = player.pick(reach, mc.getDeltaTracker().getGameTimeDeltaPartialTick(false), false);
@@ -347,7 +347,7 @@ public class PlacementTweaks
         }
 
         stackPre = stackPre.copy();
-        boolean restricted = FeatureToggle.TWEAK_PLACEMENT_RESTRICTION.getBooleanValue() || FeatureToggle.TWEAK_PLACEMENT_GRID.getBooleanValue();
+        boolean restricted = FeatureToggle.TWEAK_PLACEMENT_RESTRICTION.getBooleanValue() || FeatureToggle.TWEAK_PLACEMENT_GRID.getBooleanValue() || FeatureToggle.TWEAK_FAST_BLOCK_PLACEMENT.getBooleanValue();
         Direction sideIn = hitResult.getDirection();
         Vec3 hitVec = hitResult.getLocation();
         Direction playerFacingH = player.getDirection();
@@ -397,7 +397,7 @@ public class PlacementTweaks
         InteractionResult result = tryPlaceBlock(controller, player, world, posIn, sideIn, sideRotated, yaw, hitVec, hand, hitPart, true, hitResult.isInside());
 
         // Store the initial click data for the fast placement mode
-        if (posFirst == null && result == InteractionResult.SUCCESS && restricted)
+        if (posFirst == null && (result instanceof InteractionResult.Success) && restricted)
         {
             boolean accurate = FeatureToggle.TWEAK_ACCURATE_BLOCK_PLACEMENT.getBooleanValue();
             boolean accurateIn = Hotkeys.ACCURATE_BLOCK_PLACEMENT_IN.getKeybind().isKeybindHeld();
@@ -982,7 +982,7 @@ public class PlacementTweaks
             result = controller.useItemOn(player, hand, context);
         }
 
-        if (result == InteractionResult.SUCCESS)
+        if (result instanceof InteractionResult.Success)
         {
             placementCount++;
         }
@@ -1005,7 +1005,7 @@ public class PlacementTweaks
             }
         }
 
-        if (result == InteractionResult.SUCCESS)
+        if (result instanceof InteractionResult.Success)
         {
             Inventory inv = player.getInventory();
 
